@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("EMPLOYEE") // ADMIN, MANAGER, SALES, EMPLOYEE
+  tasks     Task[]
+  deals     Deal[]
+  createdAt DateTime @default(now())
+}
+
+model Client {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String
+  email     String?
+  company   String?
+  status    String   @default("ACTIVE")
+  deals     Deal[]
+  createdAt DateTime @default(now())
+}
+
+model Deal {
+  id           String   @id @default(cuid())
+  title        String
+  value        Float    @default(0)
+  stage        String   @default("NEW") // NEW, CONTACTED, NEGOTIATION, PROPOSAL, PAYMENT, WON, LOST
+  client       Client   @relation(fields: [clientId], references: [id])
+  clientId     String
+  assignedTo   User?    @relation(fields: [assignedToId], references: [id])
+  assignedToId String?
+  createdAt    DateTime @default(now())
+}
+
+model Task {
+  id           String    @id @default(cuid())
+  title        String
+  description  String?
+  status       String    @default("TODO") // TODO, IN_PROGRESS, REVIEW, DONE
+  priority     String    @default("NORMAL") // LOW, NORMAL, URGENT
+  dueDate      DateTime?
+  assignedTo   User?     @relation(fields: [assignedToId], references: [id])
+  assignedToId String?
+}
