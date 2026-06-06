@@ -67,14 +67,14 @@ export default async function Dashboard() {
       {/* Header section */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Добро пожаловать обратно 👋</h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <h1 className="text-2xl font-bold text-foreground">Добро пожаловать обратно 👋</h1>
+          <p className="text-sm text-muted-foreground mt-1">
             Вот что происходит в вашем бизнесе сегодня.
           </p>
         </div>
-        <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-lg border border-gray-100 shadow-sm">
-          <Calendar className="w-4 h-4 text-gray-500" />
-          <span className="text-sm font-medium text-gray-700">
+        <div className="flex items-center gap-3 bg-card px-4 py-2 rounded-lg border border-border shadow-sm">
+          <Calendar className="w-4 h-4 text-muted-foreground" />
+          <span className="text-sm font-medium text-foreground">
             {new Date().toLocaleDateString('ru-RU', { month: 'long', day: 'numeric', year: 'numeric' })}
           </span>
         </div>
@@ -86,10 +86,10 @@ export default async function Dashboard() {
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Chart Area */}
-        <div className="lg:col-span-2 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+        <div className="lg:col-span-2 bg-card p-6 rounded-2xl border border-border shadow-sm transition-colors">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-bold text-gray-900">Аналитика продаж</h2>
-            <select className="bg-gray-50 border-none text-sm font-medium text-gray-600 rounded-lg focus:ring-0">
+            <h2 className="text-lg font-bold text-foreground">Аналитика продаж</h2>
+            <select className="bg-muted border-none text-sm font-medium text-muted-foreground rounded-lg focus:ring-0">
               <option>Этот год</option>
               <option>Прошлый год</option>
             </select>
@@ -105,29 +105,29 @@ export default async function Dashboard() {
         </div>
 
         {/* Tasks Area */}
-        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+        <div className="bg-card p-6 rounded-2xl border border-border shadow-sm transition-colors">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-bold text-gray-900">Задачи на сегодня</h2>
-            <button className="text-sm font-medium text-purple-600 hover:text-purple-700">Все</button>
+            <h2 className="text-lg font-bold text-foreground">Задачи на сегодня</h2>
+            <button className="text-sm font-medium text-primary hover:text-primary/80">Все</button>
           </div>
           <div className="space-y-4">
             {recentTasks.map((task) => (
-              <div key={task.id} className="flex gap-4 p-3 hover:bg-gray-50 rounded-xl transition-colors group cursor-pointer border border-transparent hover:border-gray-100">
+              <div key={task.id} className="flex gap-4 p-3 hover:bg-muted/50 rounded-xl transition-colors group cursor-pointer border border-transparent hover:border-border">
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
-                  task.status === 'COMPLETED' ? 'bg-green-100 text-green-600' : 'bg-purple-100 text-purple-600'
+                  task.status === 'COMPLETED' ? 'bg-green-500/10 text-green-600 dark:text-green-400' : 'bg-primary/10 text-primary'
                 }`}>
                   <CheckCircle2 className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className={`text-sm font-semibold text-gray-900 mb-0.5 ${task.status === 'COMPLETED' ? 'line-through text-gray-400' : ''}`}>
+                  <h4 className={`text-sm font-semibold mb-0.5 ${task.status === 'COMPLETED' ? 'line-through text-muted-foreground' : 'text-foreground'}`}>
                     {task.title}
                   </h4>
-                  <p className="text-xs text-gray-500 font-medium">{new Date(task.createdAt).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}</p>
+                  <p className="text-xs text-muted-foreground font-medium">{new Date(task.createdAt).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}</p>
                 </div>
               </div>
             ))}
             {recentTasks.length === 0 && (
-              <p className="text-sm text-gray-500 text-center py-4">Нет новых задач.</p>
+              <p className="text-sm text-muted-foreground text-center py-4">Нет новых задач.</p>
             )}
           </div>
         </div>

@@ -92,45 +92,45 @@ export default function ClientsClient({ clients }: { clients: any[] }) {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="p-4 border-b border-gray-100 flex items-center justify-between">
+      <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden transition-colors">
+        <div className="p-4 border-b border-border flex items-center justify-between">
           <div className="relative w-72">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
             <Input 
               placeholder="Поиск клиентов..." 
-              className="pl-9 h-9 border-gray-200"
+              className="pl-9 h-9 border-border bg-background"
             />
           </div>
-          <Button variant="ghost" className="h-9 text-gray-500">Фильтры</Button>
+          <Button variant="ghost" className="h-9 text-muted-foreground hover:text-foreground">Фильтры</Button>
         </div>
         
         <Table>
-          <TableHeader className="bg-gray-50/50">
-            <TableRow>
-              <TableHead>Имя / Компания</TableHead>
-              <TableHead>Телефон</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Статус</TableHead>
-              <TableHead className="text-right">Действия</TableHead>
+          <TableHeader className="bg-muted/50">
+            <TableRow className="border-border">
+              <TableHead className="text-muted-foreground">Имя / Компания</TableHead>
+              <TableHead className="text-muted-foreground">Телефон</TableHead>
+              <TableHead className="text-muted-foreground">Email</TableHead>
+              <TableHead className="text-muted-foreground">Статус</TableHead>
+              <TableHead className="text-right text-muted-foreground">Действия</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {clients.map((client) => (
               <TableRow 
                 key={client.id} 
-                className="hover:bg-gray-50/50 cursor-pointer"
+                className="hover:bg-muted/50 cursor-pointer border-border transition-colors"
                 onClick={() => setSelectedClient(client)}
               >
-                <TableCell className="font-medium text-gray-900">
+                <TableCell className="font-medium text-foreground">
                   {client.name}
-                  {client.company && <span className="text-gray-500 text-xs block">{client.company}</span>}
+                  {client.company && <span className="text-muted-foreground text-xs block">{client.company}</span>}
                 </TableCell>
-                <TableCell className="text-gray-600">{client.phone}</TableCell>
-                <TableCell className="text-gray-500">{client.email || "—"}</TableCell>
+                <TableCell className="text-muted-foreground">{client.phone}</TableCell>
+                <TableCell className="text-muted-foreground">{client.email || "—"}</TableCell>
                 <TableCell>
                   <span className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${
-                    client.status === 'ACTIVE' ? 'bg-green-50 text-green-700' :
-                    'bg-gray-100 text-gray-700'
+                    client.status === 'ACTIVE' ? 'bg-green-500/10 text-green-600 dark:text-green-400' :
+                    'bg-muted text-muted-foreground'
                   }`}>
                     {client.status === 'ACTIVE' ? 'Активный' : client.status}
                   </span>
@@ -139,7 +139,7 @@ export default function ClientsClient({ clients }: { clients: any[] }) {
                   <Button 
                     variant="ghost" 
                     size="icon" 
-                    className="h-8 w-8 text-gray-400 hover:text-gray-900"
+                    className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-accent"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <MoreHorizontal className="w-4 h-4" />
@@ -149,7 +149,7 @@ export default function ClientsClient({ clients }: { clients: any[] }) {
             ))}
             {clients.length === 0 && (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-gray-500 py-8">
+                <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
                   Нет добавленных клиентов
                 </TableCell>
               </TableRow>
@@ -159,26 +159,26 @@ export default function ClientsClient({ clients }: { clients: any[] }) {
       </div>
 
       <Sheet open={!!selectedClient} onOpenChange={(open) => !open && setSelectedClient(null)}>
-        <SheetContent className="bg-white sm:max-w-md w-full overflow-y-auto">
+        <SheetContent className="bg-background sm:max-w-md w-full overflow-y-auto border-l border-border">
           <SheetHeader>
-            <SheetTitle>Профиль клиента</SheetTitle>
+            <SheetTitle className="text-foreground">Профиль клиента</SheetTitle>
           </SheetHeader>
           
           {selectedClient && (
             <div className="py-6 space-y-8">
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-full bg-gray-100 border-4 border-white shadow-sm overflow-hidden flex-shrink-0">
+                <div className="w-16 h-16 rounded-full bg-muted border-4 border-background shadow-sm overflow-hidden flex-shrink-0">
                   <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${selectedClient.name}`} alt={selectedClient.name} />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-gray-900">{selectedClient.name}</h2>
+                  <h2 className="text-xl font-bold text-foreground">{selectedClient.name}</h2>
                   <div className="flex items-center gap-2 mt-1">
                     <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider ${
-                      selectedClient.status === 'ACTIVE' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'
+                      selectedClient.status === 'ACTIVE' ? 'bg-green-500/10 text-green-600 dark:text-green-400' : 'bg-muted text-muted-foreground'
                     }`}>
                       {selectedClient.status === 'ACTIVE' ? 'Активный' : selectedClient.status}
                     </span>
-                    <span className="text-xs text-gray-400 flex items-center gap-1">
+                    <span className="text-xs text-muted-foreground flex items-center gap-1">
                       <Clock className="w-3 h-3" />
                       {new Date(selectedClient.createdAt).toLocaleDateString()}
                     </span>
@@ -186,72 +186,72 @@ export default function ClientsClient({ clients }: { clients: any[] }) {
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-xl p-4 space-y-4 border border-gray-100">
-                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Контактная информация</h3>
+              <div className="bg-card rounded-xl p-4 space-y-4 border border-border">
+                <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Контактная информация</h3>
                 
                 <div className="flex items-center gap-3 text-sm">
-                  <div className="w-8 h-8 rounded-lg bg-white shadow-sm flex items-center justify-center shrink-0">
-                    <Phone className="w-4 h-4 text-gray-400" />
+                  <div className="w-8 h-8 rounded-lg bg-background border border-border shadow-sm flex items-center justify-center shrink-0">
+                    <Phone className="w-4 h-4 text-muted-foreground" />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500">Телефон</p>
-                    <p className="font-medium text-gray-900">{selectedClient.phone}</p>
+                    <p className="text-xs text-muted-foreground">Телефон</p>
+                    <p className="font-medium text-foreground">{selectedClient.phone}</p>
                   </div>
                 </div>
                 
                 <div className="flex items-center gap-3 text-sm">
-                  <div className="w-8 h-8 rounded-lg bg-white shadow-sm flex items-center justify-center shrink-0">
-                    <Mail className="w-4 h-4 text-gray-400" />
+                  <div className="w-8 h-8 rounded-lg bg-background border border-border shadow-sm flex items-center justify-center shrink-0">
+                    <Mail className="w-4 h-4 text-muted-foreground" />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500">Email</p>
-                    <p className="font-medium text-gray-900">{selectedClient.email || "—"}</p>
+                    <p className="text-xs text-muted-foreground">Email</p>
+                    <p className="font-medium text-foreground">{selectedClient.email || "—"}</p>
                   </div>
                 </div>
                 
                 {selectedClient.company && (
                   <div className="flex items-center gap-3 text-sm">
-                    <div className="w-8 h-8 rounded-lg bg-white shadow-sm flex items-center justify-center shrink-0">
-                      <Building className="w-4 h-4 text-gray-400" />
+                    <div className="w-8 h-8 rounded-lg bg-background border border-border shadow-sm flex items-center justify-center shrink-0">
+                      <Building className="w-4 h-4 text-muted-foreground" />
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500">Компания</p>
-                      <p className="font-medium text-gray-900">{selectedClient.company}</p>
+                      <p className="text-xs text-muted-foreground">Компания</p>
+                      <p className="font-medium text-foreground">{selectedClient.company}</p>
                     </div>
                   </div>
                 )}
               </div>
 
               <div>
-                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 flex items-center justify-between">
+                <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 flex items-center justify-between">
                   Сделки клиента
-                  <span className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{selectedClient.deals?.length || 0}</span>
+                  <span className="bg-muted text-muted-foreground px-2 py-0.5 rounded-full">{selectedClient.deals?.length || 0}</span>
                 </h3>
                 
                 <div className="space-y-3">
                   {selectedClient.deals?.length > 0 ? (
                     selectedClient.deals.map((deal: any) => (
-                      <div key={deal.id} className="p-3 bg-white border border-gray-200 rounded-lg shadow-sm hover:border-purple-200 transition-colors">
+                      <div key={deal.id} className="p-3 bg-card border border-border rounded-lg shadow-sm hover:border-primary/50 transition-colors">
                         <div className="flex justify-between items-start mb-2">
-                          <h4 className="font-medium text-sm text-gray-900">{deal.title}</h4>
-                          <span className="text-xs font-bold text-gray-900 bg-gray-50 px-2 py-1 rounded">
+                          <h4 className="font-medium text-sm text-foreground">{deal.title}</h4>
+                          <span className="text-xs font-bold text-foreground bg-muted px-2 py-1 rounded">
                             {deal.value} ₽
                           </span>
                         </div>
                         <div className="flex items-center justify-between mt-3">
-                          <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full capitalize">
+                          <span className="text-xs text-muted-foreground bg-background border border-border px-2 py-0.5 rounded-full capitalize">
                             {deal.stage}
                           </span>
-                          <span className="text-[10px] text-gray-400">
+                          <span className="text-[10px] text-muted-foreground">
                             {new Date(deal.createdAt).toLocaleDateString()}
                           </span>
                         </div>
                       </div>
                     ))
                   ) : (
-                    <div className="text-center p-6 border-2 border-dashed border-gray-100 rounded-xl">
-                      <FileText className="w-6 h-6 text-gray-300 mx-auto mb-2" />
-                      <p className="text-sm text-gray-500">У клиента пока нет сделок.</p>
+                    <div className="text-center p-6 border-2 border-dashed border-border rounded-xl">
+                      <FileText className="w-6 h-6 text-muted-foreground/50 mx-auto mb-2" />
+                      <p className="text-sm text-muted-foreground">У клиента пока нет сделок.</p>
                     </div>
                   )}
                 </div>

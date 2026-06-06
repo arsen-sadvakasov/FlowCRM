@@ -5,6 +5,7 @@ import { Search, Plus } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { CommandMenu } from "@/components/command-menu";
+import { ModeToggle } from "@/components/mode-toggle";
 
 const routeNames: Record<string, string> = {
   "/": "Дашборд",
@@ -24,23 +25,26 @@ export function Header() {
 
   return (
     <>
-      <header className="h-16 border-b bg-white flex items-center justify-between px-6 shrink-0">
+      <header className="h-16 border-b border-border bg-background flex items-center justify-between px-6 shrink-0 transition-colors">
         <div className="flex items-center gap-4">
-          <h2 className="text-xl font-semibold text-gray-900">{pageName}</h2>
+          <h2 className="text-xl font-semibold text-foreground">{pageName}</h2>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <button 
             onClick={() => setCommandOpen(true)}
-            className="relative flex items-center w-64 bg-gray-100 hover:bg-gray-200 border-transparent rounded-lg py-1.5 px-3 text-sm text-gray-500 transition-colors"
+            className="relative flex items-center w-64 bg-muted hover:bg-muted/80 border-transparent rounded-lg py-1.5 px-3 text-sm text-muted-foreground transition-colors"
           >
-            <Search className="w-4 h-4 mr-2 shrink-0 text-gray-400" />
+            <Search className="w-4 h-4 mr-2 shrink-0 text-muted-foreground" />
             <span className="flex-1 text-left">Поиск...</span>
-            <kbd className="hidden sm:inline-flex h-5 items-center gap-1 rounded border border-gray-300 bg-white px-1.5 font-mono text-[10px] font-medium text-gray-500 opacity-100">
+            <kbd className="hidden sm:inline-flex h-5 items-center gap-1 rounded border border-border bg-background px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
               <span className="text-xs">⌘</span>K
             </kbd>
           </button>
-          <Button className="bg-gray-900 text-white hover:bg-gray-800 rounded-lg h-9">
+          
+          <ModeToggle />
+
+          <Button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg h-9">
             <Plus className="w-4 h-4 mr-2" />
             Создать задачу
           </Button>

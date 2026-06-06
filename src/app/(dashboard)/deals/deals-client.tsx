@@ -54,8 +54,8 @@ export default function DealsClient({ initialDeals, clients }: { initialDeals: a
     <div className="h-full flex flex-col">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Воронка продаж</h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <h1 className="text-2xl font-bold text-foreground">Воронка продаж</h1>
+          <p className="text-sm text-muted-foreground mt-1">
             Управляйте сделками и перемещайте их по этапами воронки.
           </p>
         </div>
@@ -64,7 +64,7 @@ export default function DealsClient({ initialDeals, clients }: { initialDeals: a
           
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-gray-900 text-white hover:bg-gray-800 rounded-lg h-9">
+              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg h-9">
                 <Plus className="w-4 h-4 mr-2" />
                 Добавить сделку
               </Button>
@@ -113,17 +113,17 @@ export default function DealsClient({ initialDeals, clients }: { initialDeals: a
             return (
               <div 
                 key={col.id} 
-                className="w-[320px] shrink-0 flex flex-col h-full bg-gray-50/50 rounded-xl p-2"
+                className="w-[320px] shrink-0 flex flex-col h-full bg-muted/30 rounded-xl p-2 transition-colors"
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={(e) => handleDrop(e, col.id)}
               >
                 <div className="flex items-center justify-between mb-4 px-2 pt-2">
                   <div className="flex items-center gap-2">
-                    <div className={cn("w-2.5 h-2.5 rounded-full", col.color)} />
-                    <h3 className="font-semibold text-gray-900 text-sm">{col.title}</h3>
-                    <span className="text-xs text-gray-500 font-medium ml-1">{columnDeals.length}</span>
+                    <div className={cn("w-2.5 h-2.5 rounded-full dark:opacity-60", col.color)} />
+                    <h3 className="font-semibold text-foreground text-sm">{col.title}</h3>
+                    <span className="text-xs text-muted-foreground font-medium ml-1">{columnDeals.length}</span>
                   </div>
-                  <button className="text-gray-400 hover:text-gray-600">
+                  <button className="text-muted-foreground hover:text-foreground">
                     <MoreHorizontal className="w-4 h-4" />
                   </button>
                 </div>
@@ -134,20 +134,20 @@ export default function DealsClient({ initialDeals, clients }: { initialDeals: a
                       key={deal.id} 
                       draggable
                       onDragStart={(e) => handleDragStart(e, deal.id)}
-                      className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all cursor-grab active:cursor-grabbing"
+                      className="bg-card p-4 rounded-xl shadow-sm border border-border hover:border-primary/50 hover:shadow-md transition-all cursor-grab active:cursor-grabbing"
                     >
                       <div className="flex justify-between items-start mb-2">
-                        <span className="text-xs font-medium text-gray-500 flex items-center gap-1">
+                        <span className="text-xs font-medium text-muted-foreground flex items-center gap-1">
                           <Paperclip className="w-3 h-3" />
                           {deal.value} ₽
                         </span>
                       </div>
                       
-                      <h4 className="font-semibold text-gray-900 text-sm mb-1">{deal.title}</h4>
-                      <p className="text-xs text-gray-500 mb-4">{deal.client?.name}</p>
+                      <h4 className="font-semibold text-foreground text-sm mb-1">{deal.title}</h4>
+                      <p className="text-xs text-muted-foreground mb-4">{deal.client?.name}</p>
                       
-                      <div className="flex items-center justify-between pt-3 border-t border-gray-50">
-                        <div className="w-6 h-6 rounded-full border-2 border-white bg-gray-200 overflow-hidden">
+                      <div className="flex items-center justify-between pt-3 border-t border-border">
+                        <div className="w-6 h-6 rounded-full border-2 border-background bg-muted overflow-hidden">
                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alice" alt="avatar" />
                         </div>
                       </div>
@@ -156,7 +156,7 @@ export default function DealsClient({ initialDeals, clients }: { initialDeals: a
                   
                   {/* Empty drop zone placeholder */}
                   {columnDeals.length === 0 && (
-                    <div className="h-24 rounded-xl border-2 border-dashed border-gray-200/60 flex items-center justify-center text-xs text-gray-400">
+                    <div className="h-24 rounded-xl border-2 border-dashed border-border/60 flex items-center justify-center text-xs text-muted-foreground/50">
                       Перетащите сюда
                     </div>
                   )}

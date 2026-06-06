@@ -31,14 +31,14 @@ export default function TasksClient({ initialTasks, users }: { initialTasks: any
     <div className="max-w-4xl space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Задачи</h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <h1 className="text-2xl font-bold text-foreground">Задачи</h1>
+          <p className="text-sm text-muted-foreground mt-1">
             Ваш список дел на сегодня и ближайшие дни.
           </p>
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-gray-900 text-white hover:bg-gray-800 rounded-lg h-9">
+            <Button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg h-9">
               <Plus className="w-4 h-4 mr-2" />
               Добавить задачу
             </Button>
@@ -75,7 +75,7 @@ export default function TasksClient({ initialTasks, users }: { initialTasks: any
         </Dialog>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-2">
+      <div className="bg-card rounded-xl shadow-sm border border-border p-2 transition-colors">
         <div className="space-y-1">
           {tasks.map((task) => {
             const isCompleted = task.status === "COMPLETED";
@@ -83,7 +83,7 @@ export default function TasksClient({ initialTasks, users }: { initialTasks: any
               <div 
                 key={task.id} 
                 className={cn(
-                  "flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 group transition-colors",
+                  "flex items-center justify-between p-3 rounded-lg hover:bg-muted/50 group transition-colors",
                   isCompleted && "opacity-60"
                 )}
               >
@@ -92,17 +92,17 @@ export default function TasksClient({ initialTasks, users }: { initialTasks: any
                     {isCompleted ? (
                       <CheckCircle2 className="w-5 h-5 text-green-500" />
                     ) : (
-                      <Circle className="w-5 h-5 text-gray-300 group-hover:text-purple-500 transition-colors" />
+                      <Circle className="w-5 h-5 text-muted-foreground/30 group-hover:text-primary transition-colors" />
                     )}
                   </button>
                   <div>
                     <h3 className={cn(
-                      "text-sm font-medium text-gray-900 mb-1",
-                      isCompleted && "line-through text-gray-500"
+                      "text-sm font-medium mb-1 transition-colors",
+                      isCompleted ? "line-through text-muted-foreground" : "text-foreground"
                     )}>
                       {task.title}
                     </h3>
-                    <div className="flex items-center gap-3 text-xs text-gray-500">
+                    <div className="flex items-center gap-3 text-xs text-muted-foreground">
                       <span className="flex items-center gap-1">
                         <Calendar className="w-3.5 h-3.5" />
                         {new Date(task.createdAt).toLocaleDateString()}
@@ -117,7 +117,7 @@ export default function TasksClient({ initialTasks, users }: { initialTasks: any
                   </div>
                 </div>
                 <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-400 hover:text-gray-900">
+                  <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
                     <MoreHorizontal className="w-4 h-4" />
                   </Button>
                 </div>
@@ -125,7 +125,7 @@ export default function TasksClient({ initialTasks, users }: { initialTasks: any
             );
           })}
           {tasks.length === 0 && (
-            <div className="text-center p-8 text-gray-500 text-sm">
+            <div className="text-center p-8 text-muted-foreground text-sm">
               Нет задач. Самое время создать новую!
             </div>
           )}
