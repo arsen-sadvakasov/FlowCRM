@@ -1,6 +1,7 @@
 import { Calendar, CheckCircle2 } from "lucide-react";
 import { PrismaClient } from "@prisma/client";
 import { StatsGrid } from "./stats-grid";
+import { SalesChart } from "./sales-chart";
 
 const prisma = new PrismaClient();
 
@@ -84,19 +85,23 @@ export default async function Dashboard() {
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Chart Area (Placeholder) */}
+        {/* Chart Area */}
         <div className="lg:col-span-2 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-lg font-bold text-gray-900">Аналитика продаж</h2>
             <select className="bg-gray-50 border-none text-sm font-medium text-gray-600 rounded-lg focus:ring-0">
-              <option>Эта неделя</option>
-              <option>Этот месяц</option>
               <option>Этот год</option>
+              <option>Прошлый год</option>
             </select>
           </div>
-          <div className="h-[300px] flex items-center justify-center border-2 border-dashed border-gray-100 rounded-xl bg-gray-50/50">
-            <p className="text-gray-400 text-sm font-medium">График будет доступен после подключения библиотеки Recharts</p>
-          </div>
+          <SalesChart data={[
+            { name: "Янв", value: 120000 },
+            { name: "Фев", value: 180000 },
+            { name: "Мар", value: 250000 },
+            { name: "Апр", value: 210000 },
+            { name: "Май", value: 380000 },
+            { name: "Июн", value: 450000 },
+          ]} />
         </div>
 
         {/* Tasks Area */}

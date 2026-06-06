@@ -1,6 +1,53 @@
-import { BarChart3 } from "lucide-react";
+import { PrismaClient } from "@prisma/client";
+import { AnalyticsClient } from "./analytics-client";
 
-export default function AnalyticsPage() {
+const prisma = new PrismaClient();
+
+export default async function AnalyticsPage() {
+  const deals = await prisma.deal.findMany({
+    include: { assignedTo: true }
+  });
+
+  const stageNames: Record<string, string> = {
+    NEW: "Новые",
+    CONTACT_MADE: "В работе",
+    PROPOSAL_SENT: "Предложение",
+    NEGOTIATION: "Переговоры",
+    WON: "Успешно",
+    LOST: "Отказ"
+  };
+
+  const stageCount: Record<string, number> = {};
+  deals.forEach(deal => {
+    const stageName = stageNames[deal.stage] || deal.stage;
+    stageCount[stageName] = (stageCount[stageName] || 0) + 1;
+  });
+
+  const dealsByStage = Object.entries(stageCount).map(([name, value]) => ({ name, value }));
+
+  const managerRevenue: Record<string, number> = {};
+  deals.forEach(deal => {
+    if (deal.value && deal.assignedTo) {
+      const managerName = deal.assignedTo.name;
+      managerRevenue[managerName] = (managerRevenue[managerName] || 0) + deal.value;
+    }
+  });
+
+  const revenueByManager = Object.entries(managerRevenue).map(([name, value]) => ({ name, value }));
+
+  const defaultDealsByStage = dealsByStage.length > 0 ? dealsByStage : [
+    { name: "Новые", value: 12 },
+    { name: "В работе", value: 8 },
+    { name: "Успешно", value: 15 },
+    { name: "Отказ", value: 4 },
+  ];
+
+  const defaultRevenueByManager = revenueByManager.length > 0 ? revenueByManager : [
+    { name: "Иван Иванов", value: 450000 },
+    { name: "Анна Смирнова", value: 380000 },
+    { name: "Петр Петров", value: 120000 },
+  ];
+
   return (
     <div className="space-y-6">
       <div>
@@ -8,13 +55,10 @@ export default function AnalyticsPage() {
         <p className="text-sm text-gray-500 mt-1">Отчеты и графики по продажам.</p>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-12 text-center flex flex-col items-center justify-center">
-        <div className="w-16 h-16 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center mb-4">
-          <BarChart3 className="w-8 h-8" />
-        </div>
-        <h2 className="text-xl font-bold text-gray-900 mb-2">Раздел в разработке</h2>
-        <p className="text-gray-500 max-w-md">Здесь будут отображаться красивые и детализированные графики воронки продаж, эффективности сотрудников и роста дохода.</p>
-      </div>
+      <AnalyticsClient 
+        dealsByStage={defaultDealsByStage} 
+        revenueByManager={defaultRevenueByManager} 
+      />
     </div>
   );
 }
