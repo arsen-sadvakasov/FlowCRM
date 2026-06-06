@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Plus, MoreHorizontal, Search, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import {
   Table,
   TableBody,
@@ -52,8 +53,13 @@ export default function ClientsClient({ clients }: { clients: any[] }) {
                 <DialogTitle>Новый клиент</DialogTitle>
               </DialogHeader>
               <form action={async (formData) => {
-                await createClient(formData);
-                setOpen(false);
+                const res = await createClient(formData);
+                if (res?.error) {
+                  toast.error(res.error);
+                } else {
+                  toast.success("Клиент успешно добавлен!");
+                  setOpen(false);
+                }
               }} className="space-y-4 py-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">Имя / Контактное лицо *</Label>

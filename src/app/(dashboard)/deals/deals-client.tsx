@@ -4,6 +4,7 @@ import { useState } from "react";
 import { MoreHorizontal, Paperclip, MessageSquare, Clock, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import { updateDealStage, createDeal } from "./actions";
 import {
   Dialog,
@@ -41,7 +42,12 @@ export default function DealsClient({ initialDeals, clients }: { initialDeals: a
     setDeals(deals.map(d => d.id === dealId ? { ...d, stage: columnId } : d));
     
     // Server update
-    await updateDealStage(dealId, columnId);
+    const res = await updateDealStage(dealId, columnId);
+    if (res?.error) {
+      toast.error(res.error);
+    } else {
+      toast.success("Статус изменен");
+    }
   };
 
   return (
@@ -68,8 +74,13 @@ export default function DealsClient({ initialDeals, clients }: { initialDeals: a
                 <DialogTitle>Новая сделка</DialogTitle>
               </DialogHeader>
               <form action={async (formData) => {
-                await createDeal(formData);
-                setOpen(false);
+                const res = await createDeal(formData);
+                if (res?.error) {
+                  toast.error(res.error);
+                } else {
+                  toast.success("Сделка создана!");
+                  setOpen(false);
+                }
               }} className="space-y-4 py-4">
                 <div className="space-y-2">
                   <Label>Название сделки</Label>

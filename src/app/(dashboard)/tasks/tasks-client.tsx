@@ -4,6 +4,7 @@ import { useState } from "react";
 import { CheckCircle2, Circle, MoreHorizontal, Calendar, Plus, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import { toggleTaskStatus, createTask } from "./actions";
 import {
   Dialog,
@@ -47,8 +48,13 @@ export default function TasksClient({ initialTasks, users }: { initialTasks: any
               <DialogTitle>Новая задача</DialogTitle>
             </DialogHeader>
             <form action={async (formData) => {
-              await createTask(formData);
-              setOpen(false);
+              const res = await createTask(formData);
+              if (res?.error) {
+                toast.error(res.error);
+              } else {
+                toast.success("Задача добавлена!");
+                setOpen(false);
+              }
             }} className="space-y-4 py-4">
               <div className="space-y-2">
                 <Label>Название</Label>

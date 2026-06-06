@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Mail, MoreHorizontal, Shield, Plus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import { createEmployee } from "./actions";
 
 type User = {
@@ -32,8 +33,11 @@ export function TeamClient({ initialUsers }: { initialUsers: User[] }) {
     const formData = new FormData(e.currentTarget);
     try {
       await createEmployee(formData);
+      toast.success("Сотрудник успешно добавлен!");
+      setIsModalOpen(false);
       window.location.reload(); 
     } catch (err: any) {
+      toast.error(err.message || "Произошла ошибка");
       setError(err.message || "Произошла ошибка");
       setIsLoading(false);
     }
