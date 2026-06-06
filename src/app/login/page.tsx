@@ -1,24 +1,17 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
+import { authenticate } from "./actions";
 
 export default function LoginPage() {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    // Имитация авторизации
-    setTimeout(() => {
-      router.push("/");
-    }, 1000);
-  };
+  const [errorMessage, dispatch, isPending] = useActionState(
+    authenticate,
+    undefined
+  );
 
   return (
     <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center p-4">
@@ -33,11 +26,12 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form action={dispatch} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">Электронная почта</Label>
             <Input 
               id="email" 
+              name="email"
               type="email" 
               placeholder="name@flowcrm.ru" 
               required 
@@ -54,18 +48,23 @@ export default function LoginPage() {
             </div>
             <Input 
               id="password" 
+              name="password"
               type="password" 
               required 
               className="bg-gray-50"
             />
           </div>
 
+          {errorMessage && (
+            <p className="text-sm text-red-500 bg-red-50 p-2 rounded-md">{errorMessage}</p>
+          )}
+
           <Button 
             type="submit" 
             className="w-full bg-gray-900 text-white hover:bg-gray-800 h-11"
-            disabled={isLoading}
+            disabled={isPending}
           >
-            {isLoading ? (
+            {isPending ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             ) : null}
             Войти
