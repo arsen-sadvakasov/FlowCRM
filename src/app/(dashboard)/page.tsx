@@ -1,5 +1,6 @@
-import { Users, FolderKanban, CheckCircle2, TrendingUp, Calendar, ArrowUpRight } from "lucide-react";
+import { Calendar, CheckCircle2 } from "lucide-react";
 import { PrismaClient } from "@prisma/client";
+import { StatsGrid } from "./stats-grid";
 
 const prisma = new PrismaClient();
 
@@ -14,36 +15,44 @@ export default async function Dashboard() {
       value: clientsCount.toString(),
       trend: "+12%",
       trendUp: true,
-      icon: Users,
+      iconName: "Users",
       color: "bg-blue-500",
       lightColor: "bg-blue-50",
+      textColor: "text-blue-500",
+      href: "/clients"
     },
     {
       title: "Активные сделки",
       value: dealsCount.toString(),
       trend: "+5%",
       trendUp: true,
-      icon: FolderKanban,
+      iconName: "FolderKanban",
       color: "bg-purple-500",
       lightColor: "bg-purple-50",
+      textColor: "text-purple-500",
+      href: "/deals"
     },
     {
       title: "Задачи",
       value: tasksCount.toString(),
       trend: "-2%",
       trendUp: false,
-      icon: CheckCircle2,
+      iconName: "CheckCircle2",
       color: "bg-orange-500",
       lightColor: "bg-orange-50",
+      textColor: "text-orange-500",
+      href: "/tasks"
     },
     {
       title: "Выручка (План)",
       value: "1.2M ₽",
       trend: "+18%",
       trendUp: true,
-      icon: TrendingUp,
+      iconName: "TrendingUp",
       color: "bg-green-500",
       lightColor: "bg-green-50",
+      textColor: "text-green-500",
+      href: "/analytics"
     },
   ];
 
@@ -70,30 +79,8 @@ export default async function Dashboard() {
         </div>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat, i) => (
-          <div key={i} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
-            <div className="flex justify-between items-start mb-4">
-              <div className={`p-3 rounded-xl ${stat.lightColor}`}>
-                <stat.icon className={`w-6 h-6 text-${stat.color.replace('bg-', '')}`} />
-              </div>
-              <div className={`flex items-center gap-1 text-sm font-medium px-2 py-1 rounded-md ${
-                stat.trendUp ? 'text-green-700 bg-green-50' : 'text-red-700 bg-red-50'
-              }`}>
-                {stat.trendUp ? <ArrowUpRight className="w-3 h-3" /> : <ArrowUpRight className="w-3 h-3 rotate-90" />}
-                {stat.trend}
-              </div>
-            </div>
-            <div>
-              <h3 className="text-gray-500 text-sm font-medium mb-1">{stat.title}</h3>
-              <p className="text-3xl font-bold text-gray-900">{stat.value}</p>
-            </div>
-            {/* Decorative background gradient */}
-            <div className={`absolute -bottom-6 -right-6 w-24 h-24 rounded-full blur-2xl opacity-0 group-hover:opacity-20 transition-opacity ${stat.color}`} />
-          </div>
-        ))}
-      </div>
+      {/* Animated Stats Grid */}
+      <StatsGrid stats={stats} />
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

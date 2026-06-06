@@ -31,14 +31,16 @@ const METRICS_LINKS = [
   { name: "Аналитика", href: "/analytics", icon: BarChart3 },
 ];
 
-export function Sidebar() {
+import { logout } from "@/app/login/actions";
+
+export function Sidebar({ user }: { user?: any }) {
   const pathname = usePathname();
 
   return (
     <aside className="w-64 flex flex-col h-screen border-r bg-[#f8fafc] overflow-y-auto hidden md:flex shrink-0">
       <div className="p-6 flex items-center gap-3">
-        <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-lg shadow-sm">
-          F
+        <div className="w-8 h-8 rounded-xl overflow-hidden flex items-center justify-center shadow-sm bg-white shrink-0">
+          <img src="/logo.png" alt="FlowCRM Logo" className="w-full h-full object-contain" />
         </div>
         <div>
           <h1 className="font-bold text-gray-900 leading-tight">FlowCRM</h1>
@@ -132,21 +134,28 @@ export function Sidebar() {
           Настройки
         </Link>
         <button
+          onClick={() => logout()}
           className="flex w-full items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-red-50 hover:text-red-600 transition-colors"
         >
           <LogOut className="w-4 h-4" />
           Выйти
         </button>
         
-        <div className="mt-4 flex items-center gap-3 px-3 py-2">
-          <div className="w-8 h-8 rounded-full bg-gray-200 overflow-hidden shrink-0">
-             <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="User" className="w-full h-full object-cover" />
+        {user && (
+          <div className="mt-4 flex items-center gap-3 px-3 py-2">
+            <div className="w-8 h-8 rounded-full bg-gray-200 overflow-hidden shrink-0">
+               <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user.name}`} alt="User" className="w-full h-full object-cover" />
+            </div>
+            <div className="truncate flex-1">
+              <p className="text-sm font-medium text-gray-900 truncate">{user.name}</p>
+              <p className="text-xs text-gray-500 truncate">
+                {user.role === 'ADMIN' ? 'Администратор' : 
+                 user.role === 'MANAGER' ? 'Руководитель' : 
+                 user.role === 'SALES' ? 'Менеджер по продажам' : 'Сотрудник'}
+              </p>
+            </div>
           </div>
-          <div className="truncate">
-            <p className="text-sm font-medium text-gray-900 truncate">Иван Иванов</p>
-            <p className="text-xs text-gray-500 truncate">Руководитель</p>
-          </div>
-        </div>
+        )}
       </div>
     </aside>
   );

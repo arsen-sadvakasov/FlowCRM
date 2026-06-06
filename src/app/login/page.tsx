@@ -17,8 +17,8 @@ export default function LoginPage() {
     <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
         <div className="text-center mb-8">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-2xl shadow-sm mx-auto mb-4">
-            F
+          <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mx-auto mb-6 shrink-0 overflow-hidden">
+            <img src="/logo.png" alt="FlowCRM Logo" className="w-full h-full object-contain p-2" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Добро пожаловать</h1>
           <p className="text-sm text-gray-500">
