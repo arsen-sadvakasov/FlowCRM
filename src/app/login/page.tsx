@@ -14,35 +14,35 @@ export default function LoginPage() {
   );
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4 transition-colors">
+      <div className="max-w-md w-full bg-card rounded-2xl shadow-xl border border-border p-8 transition-colors">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center mx-auto mb-6 shrink-0 overflow-hidden">
+          <div className="w-16 h-16 bg-card rounded-2xl shadow-sm border border-border flex items-center justify-center mx-auto mb-6 shrink-0 overflow-hidden">
             <img src="/logo.png" alt="FlowCRM Logo" className="w-full h-full object-contain p-2" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Добро пожаловать</h1>
-          <p className="text-sm text-gray-500">
+          <h1 className="text-2xl font-bold text-foreground mb-2">Добро пожаловать</h1>
+          <p className="text-sm text-muted-foreground">
             Войдите в свой аккаунт FlowCRM для продолжения
           </p>
         </div>
 
         <form action={dispatch} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email">Электронная почта</Label>
+            <Label htmlFor="email" className="text-foreground">Электронная почта</Label>
             <Input 
               id="email" 
               name="email"
               type="email" 
               placeholder="name@flowcrm.ru" 
               required 
-              className="bg-gray-50"
+              className="bg-background text-foreground border-input"
             />
           </div>
           
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label htmlFor="password">Пароль</Label>
-              <a href="#" className="text-xs font-medium text-purple-600 hover:text-purple-500">
+              <Label htmlFor="password" className="text-foreground">Пароль</Label>
+              <a href="#" className="text-xs font-medium text-primary hover:text-primary/80 transition-colors">
                 Забыли пароль?
               </a>
             </div>
@@ -51,17 +51,17 @@ export default function LoginPage() {
               name="password"
               type="password" 
               required 
-              className="bg-gray-50"
+              className="bg-background text-foreground border-input"
             />
           </div>
 
           {errorMessage && (
-            <p className="text-sm text-red-500 bg-red-50 p-2 rounded-md">{errorMessage}</p>
+            <p className="text-sm text-destructive bg-destructive/10 p-2 rounded-md border border-destructive/20">{errorMessage}</p>
           )}
 
           <Button 
             type="submit" 
-            className="w-full bg-gray-900 text-white hover:bg-gray-800 h-11"
+            className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-11 transition-colors"
             disabled={isPending}
           >
             {isPending ? (
@@ -71,9 +71,9 @@ export default function LoginPage() {
           </Button>
         </form>
 
-        <p className="text-center text-sm text-gray-500 mt-6">
+        <p className="text-center text-sm text-muted-foreground mt-6">
           Нет аккаунта?{" "}
-          <a href="#" className="font-medium text-purple-600 hover:text-purple-500">
+          <a href="#" className="font-medium text-primary hover:text-primary/80 transition-colors">
             Обратитесь к администратору
           </a>
         </p>
