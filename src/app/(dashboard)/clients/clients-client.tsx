@@ -37,8 +37,8 @@ export default function ClientsClient({ clients }: { clients: any[] }) {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Клиенты</h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <h1 className="text-2xl font-bold text-foreground">Клиенты</h1>
+          <p className="text-sm text-muted-foreground mt-1">
             Управление базой клиентов и контактными данными.
           </p>
         </div>
@@ -50,7 +50,7 @@ export default function ClientsClient({ clients }: { clients: any[] }) {
           
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-gray-900 text-white hover:bg-gray-800 rounded-lg h-9">
+              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg h-9">
                 <Plus className="w-4 h-4 mr-2" />
                 Добавить клиента
               </Button>
