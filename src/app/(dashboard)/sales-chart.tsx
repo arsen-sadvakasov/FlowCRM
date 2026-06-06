@@ -26,22 +26,30 @@ export function SalesChart({ data }: { data: ChartData[] }) {
               <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0}/>
             </linearGradient>
           </defs>
-          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--color-border, #f1f5f9)" />
           <XAxis 
             dataKey="name" 
             axisLine={false} 
             tickLine={false} 
-            tick={{ fill: '#64748b', fontSize: 12 }} 
+            tick={{ fill: 'var(--color-muted-foreground, #64748b)', fontSize: 12 }} 
             dy={10}
           />
           <YAxis 
             axisLine={false} 
             tickLine={false} 
-            tick={{ fill: '#64748b', fontSize: 12 }}
+            tick={{ fill: 'var(--color-muted-foreground, #64748b)', fontSize: 12 }}
             tickFormatter={(value) => `${value >= 1000 ? value / 1000 + 'k' : value}`}
           />
           <Tooltip 
-            contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+            contentStyle={{ 
+              borderRadius: '12px', 
+              border: '1px solid var(--color-border, #f1f5f9)', 
+              boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+              backgroundColor: 'var(--color-card, #ffffff)',
+              color: 'var(--color-foreground, #000000)'
+            }}
+            itemStyle={{ color: 'var(--color-foreground, #000000)' }}
+            labelStyle={{ color: 'var(--color-muted-foreground, #64748b)' }}
             formatter={(value: number) => [`${value.toLocaleString('ru-RU')} ₽`, 'Выручка']}
           />
           <Area 
